@@ -2,12 +2,12 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://kk1fff.github.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://blog.patrickz.net
+title: Patricklog
+subtitle: Hi, I am Patrick.
+author: kk1fff
 simple_search: http://google.com/search
-description:
+description: This is my blog, I will share things here.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
