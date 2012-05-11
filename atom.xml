@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Patricklog]]></title>
+  <link href="http://blog.patrickz.net/atom.xml" rel="self"/>
+  <link href="http://blog.patrickz.net/"/>
+  <updated>2012-05-12T02:57:06+08:00</updated>
+  <id>http://blog.patrickz.net/</id>
+  <author>
+    <name><![CDATA[kk1fff]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[簽發 TLS 憑證]]></title>
+    <link href="http://blog.patrickz.net/blog/2012/05/11/qian-fa-tls-ping-zheng/"/>
+    <updated>2012-05-11T00:25:00+08:00</updated>
+    <id>http://blog.patrickz.net/blog/2012/05/11/qian-fa-tls-ping-zheng</id>
+    <content type="html"><![CDATA[<p>使用 SSL 真的是個痛苦的過程，最麻煩的部份莫過於憑證。SSL 除了保障資料不被竊聽以外，還會保障
+Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方法去確定這個 Server 真的就是字面上
+打的那個 Server。</p>
+
+<p>瀏覽器如何檢查呢？首先，瀏覽器內建有許多根憑證，這些根憑證憑證商自己簽發給自己的憑證，他的
+保證來自於使用者對於瀏覽器廠商的信任，所以我們假設這些憑證都是可被相信的，會一直強調信任
+是因為這些根憑證是之後驗證其他憑證的基礎，所以我們如果不相信他，那其他的驗證也別說了。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Patricklog</title>
+  <title>簽發 TLS 憑證 - Patricklog</title>
   <meta name="author" content="kk1fff">
 
   
@@ -20,7 +20,7 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.patrickz.net">
+  <link rel="canonical" href="http://blog.patrickz.net/blog/2012/05/11/qian-fa-tls-ping-zheng">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -64,15 +64,12 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/05/11/qian-fa-tls-ping-zheng/">簽發 TLS 憑證</a></h1>
+      <h1 class="entry-title">簽發 TLS 憑證</h1>
     
     
       <p class="meta">
@@ -90,14 +87,14 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
 
 <time datetime="2012-05-11T00:25:00+08:00" pubdate data-updated="true">May 11<span>th</span>, 2012</time>
         
-         | <a href="/blog/2012/05/11/qian-fa-tls-ping-zheng/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>使用 SSL 真的是個痛苦的過程，最麻煩的部份莫過於憑證。SSL 除了保障資料不被竊聽以外，還會保障
+<div class="entry-content"><p>使用 SSL 真的是個痛苦的過程，最麻煩的部份莫過於憑證。SSL 除了保障資料不被竊聽以外，還會保障
 Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方法去確定這個 Server 真的就是字面上
 打的那個 Server。</p>
 
@@ -105,18 +102,57 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
 保證來自於使用者對於瀏覽器廠商的信任，所以我們假設這些憑證都是可被相信的，會一直強調信任
 是因為這些根憑證是之後驗證其他憑證的基礎，所以我們如果不相信他，那其他的驗證也別說了。</p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">kk1fff</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2012-05-11T00:25:00+08:00" pubdate data-updated="true">May 11<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
   
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.patrickz.net/blog/2012/05/11/qian-fa-tls-ping-zheng/" data-via="" data-counturl="http://blog.patrickz.net/blog/2012/05/11/qian-fa-tls-ping-zheng/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -138,6 +174,7 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -152,7 +189,10 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
       var disqus_shortname = 'patricklog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.patrickz.net/blog/2012/05/11/qian-fa-tls-ping-zheng/';
+        var disqus_url = 'http://blog.patrickz.net/blog/2012/05/11/qian-fa-tls-ping-zheng/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
