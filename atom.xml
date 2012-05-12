@@ -4,7 +4,7 @@
   <title><![CDATA[Patricklog]]></title>
   <link href="http://blog.patrickz.net/atom.xml" rel="self"/>
   <link href="http://blog.patrickz.net/"/>
-  <updated>2012-05-13T00:47:15+08:00</updated>
+  <updated>2012-05-13T01:02:48+08:00</updated>
   <id>http://blog.patrickz.net/</id>
   <author>
     <name><![CDATA[kk1fff]]></name>
@@ -12,5 +12,18 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[新 Blog 開張]]></title>
+    <link href="http://blog.patrickz.net/blog/2012/05/13/xin-blog-kai-zhang/"/>
+    <updated>2012-05-13T00:48:00+08:00</updated>
+    <id>http://blog.patrickz.net/blog/2012/05/13/xin-blog-kai-zhang</id>
+    <content type="html"><![CDATA[<p>這次選用 Octopress 當作 Blog backend，真是經歷波折啊，全然不同的體驗。Octopress 不像以前用 blogspot，有漂亮的 UI 來設定網頁。他是用 markdown 撰寫，用 Ruby 去整理所有的樣板，在產生出靜態網頁，發布到網站。網站可以用 github page 來 host，搭配私有域名，可以真的弄出一個「很有個人味道」的 blog。</p>
+
+<p>只是為了要設定樣板，也真是折騰。尤其我不會 scss，幾乎沒辦法做事，上網去爬了一堆文，才找到方法在我的標題列上面放上背景。不過看到了精美的程式碼區塊，也覺得這應該還算是值得啦 XD。</p>
+
+<p>接下來還要弄 Google adsense 和 Google Analytics，就慢慢來。希望這個 Blog 可以使用順利。</p>
+]]></content>
+  </entry>
   
 </feed>
