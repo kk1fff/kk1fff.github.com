@@ -4,6 +4,7 @@ title: "簽發 TLS 憑證"
 date: 2012-05-11 00:25
 comments: true
 categories: 
+published: false
 ---
 使用 SSL 真的是個痛苦的過程，最麻煩的部份莫過於憑證。SSL 除了保障資料不被竊聽以外，還會保障
 Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方法去確定這個 Server 真的就是字面上
