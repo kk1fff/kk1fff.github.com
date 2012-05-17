@@ -6,4 +6,4 @@ comments: true
 categories: 
 ---
 也不知道要寫什麼 XD
-價的這麼辛苦耶
+架的這麼辛苦耶
