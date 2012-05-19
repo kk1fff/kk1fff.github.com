@@ -4,7 +4,7 @@
   <title><![CDATA[Patricklog]]></title>
   <link href="http://blog.patrickz.net/atom.xml" rel="self"/>
   <link href="http://blog.patrickz.net/"/>
-  <updated>2012-05-18T01:33:00+08:00</updated>
+  <updated>2012-05-20T02:09:29+08:00</updated>
   <id>http://blog.patrickz.net/</id>
   <author>
     <name><![CDATA[kk1fff]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Hello World to B2G]]></title>
+    <link href="http://blog.patrickz.net/blog/2012/05/20/hello-world-to-b2g/"/>
+    <updated>2012-05-20T00:25:00+08:00</updated>
+    <id>http://blog.patrickz.net/blog/2012/05/20/hello-world-to-b2g</id>
+    <content type="html"><![CDATA[<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/b2g_lock.png"></p>
+
+<p>今天趁 JSDC 一股熱忱，決定來練習一個 B2G App。</p>
+
+<h3>Hello Gaia</h3>
+
+<p>建立 B2G App 首先要當然是要替檔案建立資料夾，我直接建立在 Gaia/apps 底下，開一個 hello 資料夾，再來建立的是 mainfest.json，依據 <a href="https://developer.mozilla.org/en/Apps/Manifest">App manifest</a>
+網頁上的描述，這個檔案至少有 name 和 description 要寫，類似這樣</p>
+
+<figure class='code'><figcaption><span>manifest.json </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="s2">&quot;name&quot;</span> <span class="o">:</span> <span class="s2">&quot;hello world&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;version&quot;</span> <span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="s2">&quot;description&quot;</span> <span class="o">:</span> <span class="s2">&quot;this is hello&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中要注意就是 XULRunner 對於 json 的處理似乎比 node 還要更嚴謹，JSON 的 key 值一定要用雙引號，而且結尾不可以有逗號。</p>
+
+<p>再來就是一個簡單的 index.html</p>
+
+<figure class='code'><figcaption><span>index.html </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'><span class="nt">&lt;head&gt;&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body&gt;</span>
+</span><span class='line'>hello gaia.
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>之後到 gaia 的 root，先砍掉已經 build 好的 profile （如果先前有 build 過），再重新
+make</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rm -r profile
+</span><span class='line'><span class="nv">$ </span>make
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Build 完以後，重新執行 Gaia 的模擬器，就可以看到：app 出現了！！</p>
+
+<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2015813.png"></p>
+
+<p>點一下我們剛剛弄好的 hello，就會跑出剛剛網頁的內容</p>
+
+<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2020205.png"></p>
+
+<h3>Map</h3>
+
+<p>從 Openstreet Map 上面可以取得我們所想要的地圖資料，在透過 iframe 就可以把他嵌進網頁裡面只要把剛剛的 hello gaia 稍微小改一下</p>
+
+<figure class='code'><figcaption><span>index.html </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'><span class="nt">&lt;head&gt;&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body&gt;</span>
+</span><span class='line'><span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;425&quot;</span> <span class="na">height=</span><span class="s">&quot;350&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span> <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span> <span class="na">marginheight=</span><span class="s">&quot;0&quot;</span> <span class="na">marginwidth=</span><span class="s">&quot;0&quot;</span> <span class="na">src=</span><span class="s">&quot;http://www.openstreetmap.org/export/embed.html?bbox=121.296,24.9586,121.3607,25.0079&amp;amp;layer=mapnik&quot;</span> <span class="na">style=</span><span class="s">&quot;border: 1px solid black&quot;</span><span class="nt">&gt;&lt;/iframe&gt;&lt;br</span> <span class="nt">/&gt;&lt;small&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://www.openstreetmap.org/?lat=24.98325&amp;amp;lon=121.32835&amp;amp;zoom=14&amp;amp;layers=M&quot;</span><span class="nt">&gt;</span>View Larger Map<span class="nt">&lt;/a&gt;&lt;/small&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>重新編譯後，馬上，地圖就出現了</p>
+
+<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2020648.png"></p>
+
+<h3>Reference</h3>
+
+<ul>
+<li><a href="https://wiki.mozilla.org/WebAPI">WebAPI</a></li>
+<li><a href="https://developer.mozilla.org/en/Apps/Getting_Started">Getting started with making apps</a></li>
+<li><a href="https://developer.mozilla.org/en/Apps/Manifest">App manifest</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[來紀錄一下怎麼用 Octopress 好了]]></title>
