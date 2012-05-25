@@ -5,12 +5,29 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Patricklog</title>
+  <title>C 和 C++ 的 Callback - Patricklog</title>
   <meta name="author" content="kk1fff">
 
   
-  <meta name="description" content="使用 SSL 真的是個痛苦的過程，最麻煩的部份莫過於憑證。SSL 除了保障資料不被竊聽以外，還會保障
-Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方法去確定這個 Server 真的就是字面上打的那個 Server。 瀏覽器如何檢查呢？首先，瀏覽器內建有許多根憑證， &hellip;">
+  <meta name="description" content="C 的 Callback Callback 把函數當成指標，在 C 裡面是這樣用 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+#include &lt;stdio.h&gt; int compute(int a, int b, int (*op)( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +36,7 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.patrickz.net">
+  <link rel="canonical" href="http://blog.patrickz.net/blog/2012/05/21/c-he-c-plus-plus-de-callback">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,123 +92,12 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/05/26/qian-fa-tls-ping-zheng/">簽發 TLS 憑證</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-26T04:39:00+08:00" pubdate data-updated="true">May 26<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/26/qian-fa-tls-ping-zheng/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>使用 SSL 真的是個痛苦的過程，最麻煩的部份莫過於憑證。SSL 除了保障資料不被竊聽以外，還會保障
-Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方法去確定這個 Server 真的就是字面上打的那個 Server。</p>
-
-<p>瀏覽器如何檢查呢？首先，瀏覽器內建有許多根憑證，這些根憑證憑證商自己簽發給自己的憑證，他的保證來自於使用者對於瀏覽器廠商的信任，所以我們假設這些憑證都是可被相信的，會一直強調信任是因為這些根憑證是之後驗證其他憑證的基礎，所以我們如果不相信他，那其他的驗證也別說了。當我們嘗試連線到一個網站時，瀏覽器會對這個網站作 SSL Handshake，建立 session layer
-的連線。這個連線位於 TCP 和 HTTP 之間，可以把他當作是一個安全的可信賴連線。在 SSL
-Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 CA 憑證。這兩個憑證用來建立所謂的 trust chain。</p>
-
-<p>什麼是 trust chain 呢？trust chain 就是一種類似老鼠會的組織。剛剛不是說過，我們的瀏覽器裡面有內建一些根憑證嗎？因為我們已經相信了這些根憑證，所以我們也就相信了他們認證的憑證，而他們認證的憑證又認證了新的憑證，我們也相信，如此一來，只要我們從 server 下載到的憑證的認證單位的認證單位的認證單位&#8230;.最後是我們瀏覽器的根憑證，那我們就可以相信這個憑證是有效的。</p>
-
-<p>問題是，你要怎麼取得這種憑證？基本上，沒辦法，除非付錢。你可以付錢，請某個單位幫你認證你的憑證，這樣的話，因為幫你認證的單位的憑證有被內建在瀏覽器，所以瀏覽器就會認為你的憑證有效。或者，你也可以自己造一張自簽的憑證，然後用這張憑證去認證你的 server 憑證，再請使用者把這張自簽憑證手動加入瀏覽器根憑證，當然這狀況就是你的使用者肯、而且他要知道怎麼弄。</p>
-
-<p>測試 SSL 連線當然用後者就可以了。這些步驟都可以使用 OpenSSL 來完成。</p>
-
-<p>簽發 Self-signed 憑證的過程</p>
-
-<h3>建立 CA 憑證</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>openssl genrsa -des3 -out ca.key 4096  <span class="c"># 建立 CA 私鑰</span>
-</span><span class='line'>openssl req -new -x509 -days 365 -key ca.key -out ca.crt  <span class="c"># 簽發 CA 憑證</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># 驗證一下，是不是正確</span>
-</span><span class='line'>openssl x509 -in ca.crt -text -noout
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>建立 Server 憑證</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>openssl genrsa -des3 -out server.key 4096  <span class="c"># 建立 Server 私鑰</span>
-</span><span class='line'>openssl req -new -key server.key -out server.csr  <span class="c"># 建立 CSR，這個步驟會要求輸入基本資料，記得，CN 一定要符合 Domain（可以是 localhost 囉）</span>
-</span><span class='line'>openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt  <span class="c"># 使用 CA Key 簽發憑證</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>匯入瀏覽器</h3>
-
-<p>匯入瀏覽器的流程很容易，以 Firefox 來說，在 [設定] -> [Advanced] -> [Encryption]
-可以找到 [View Certificates] 按鈕。</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642500.png"></p>
-
-<p>按下這個按鈕後，出現憑證列表，選擇 [Authorities]，就會出現所有認證機構的憑證。</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642358.png"></p>
-
-<p>最後選擇 [Import] 選取剛剛建立好的 ca.crt，出現一個選項，至少要在相信他簽發的 Website</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2643502.png"></p>
-
-<p>最後憑證就會出現在列表之中了</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642500.png"></p>
-
-<p>匯入 Server 的方式因各種不同 Server 而異，主要會使用到 ca.crt、server.crt 和 server.key
-因為使用者已經相信簽發機構簽發的憑證，所以我們匯入 Server 之後，建立的 ssl 就可以被 user
-信任。</p>
-
-<h3>Reference</h3>
-
-<ul>
-<li><a href="http://www.tc.umn.edu/~brams006/selfsign.html">Creating Certificate Authorities and self-signed SSL certificates</a></li>
-<li><a href="http://www.akadia.com/services/ssh_test_certificate.html">How to create a self-signed SSL Certificate</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/21/c-he-c-plus-plus-de-callback/">C 和 C++ 的 Callback</a></h1>
+      <h1 class="entry-title">C 和 C++ 的 Callback</h1>
     
     
       <p class="meta">
@@ -209,14 +115,14 @@ Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 
 
 <time datetime="2012-05-21T11:58:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2012</time>
         
-         | <a href="/blog/2012/05/21/c-he-c-plus-plus-de-callback/#disqus_thread">Comments</a>
+         | <a href="#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h3>C 的 Callback</h3>
+<div class="entry-content"><h3>C 的 Callback</h3>
 
 <p>Callback 把函數當成指標，在 C 裡面是這樣用</p>
 
@@ -370,152 +276,16 @@ Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 
 </ul>
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/20/hello-world-to-b2g/">Hello World to B2G</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">kk1fff</span></span>
 
-<time datetime="2012-05-20T00:25:00+08:00" pubdate data-updated="true">May 20<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/20/hello-world-to-b2g/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/b2g_lock.png"></p>
-
-<p>今天趁 JSDC 一股熱忱，決定來練習一個 B2G App。</p>
-
-<h3>Hello Gaia</h3>
-
-<p>建立 B2G App 首先要當然是要替檔案建立資料夾，我直接建立在 Gaia/apps 底下，開一個 hello 資料夾，再來建立的是 mainfest.json，依據 <a href="https://developer.mozilla.org/en/Apps/Manifest">App manifest</a>
-網頁上的描述，這個檔案至少有 name 和 description 要寫，類似這樣</p>
-
-<figure class='code'><figcaption><span>manifest.json </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="s2">&quot;name&quot;</span> <span class="o">:</span> <span class="s2">&quot;hello world&quot;</span><span class="p">,</span>
-</span><span class='line'>  <span class="s2">&quot;version&quot;</span> <span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
-</span><span class='line'>  <span class="s2">&quot;description&quot;</span> <span class="o">:</span> <span class="s2">&quot;this is hello&quot;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>其中要注意就是 XULRunner 對於 json 的處理似乎比 node 還要更嚴謹，JSON 的 key 值一定要用雙引號，而且結尾不可以有逗號。</p>
-
-<p>再來就是一個簡單的 index.html</p>
-
-<figure class='code'><figcaption><span>index.html </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
-</span><span class='line'><span class="nt">&lt;head&gt;&lt;/head&gt;</span>
-</span><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'>hello gaia.
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>之後到 gaia 的 root，先砍掉已經 build 好的 profile （如果先前有 build 過），再重新
-make</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rm -r profile
-</span><span class='line'><span class="nv">$ </span>make
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Build 完以後，重新執行 Gaia 的模擬器，就可以看到：app 出現了！！</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2015813.png"></p>
-
-<p>點一下我們剛剛弄好的 hello，就會跑出剛剛網頁的內容</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2020205.png"></p>
-
-<h3>Map</h3>
-
-<p>從 Openstreet Map 上面可以取得我們所想要的地圖資料，在透過 iframe 就可以把他嵌進網頁裡面只要把剛剛的 hello gaia 稍微小改一下</p>
-
-<figure class='code'><figcaption><span>index.html </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
-</span><span class='line'><span class="nt">&lt;head&gt;&lt;/head&gt;</span>
-</span><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'><span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;425&quot;</span> <span class="na">height=</span><span class="s">&quot;350&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span> <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span> <span class="na">marginheight=</span><span class="s">&quot;0&quot;</span> <span class="na">marginwidth=</span><span class="s">&quot;0&quot;</span> <span class="na">src=</span><span class="s">&quot;http://www.openstreetmap.org/export/embed.html?bbox=121.296,24.9586,121.3607,25.0079&amp;amp;layer=mapnik&quot;</span> <span class="na">style=</span><span class="s">&quot;border: 1px solid black&quot;</span><span class="nt">&gt;&lt;/iframe&gt;&lt;br</span> <span class="nt">/&gt;&lt;small&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://www.openstreetmap.org/?lat=24.98325&amp;amp;lon=121.32835&amp;amp;zoom=14&amp;amp;layers=M&quot;</span><span class="nt">&gt;</span>View Larger Map<span class="nt">&lt;/a&gt;&lt;/small&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>重新編譯後，馬上，地圖就出現了</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2020648.png"></p>
-
-<h3>Reference</h3>
-
-<ul>
-<li><a href="https://wiki.mozilla.org/WebAPI">WebAPI</a></li>
-<li><a href="https://developer.mozilla.org/en/Apps/Getting_Started">Getting started with making apps</a></li>
-<li><a href="https://developer.mozilla.org/en/Apps/Manifest">App manifest</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/18/lai-ji-lu-%5B%3F%5D-xia-zen-mo-yong-octopress-hao-liao/">來紀錄一下怎麼用 Octopress 好了</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -527,133 +297,40 @@ make</p>
   
 
 
-<time datetime="2012-05-18T01:25:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/18/lai-ji-lu-%5B%3F%5D-xia-zen-mo-yong-octopress-hao-liao/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>新增一篇文章</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake new_post<span class="o">[</span><span class="s1">&#39;文章的標題&#39;</span><span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在本機預覽</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake preview
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>發佈出去</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake generate
-</span><span class='line'><span class="nv">$ </span>bundle <span class="nb">exec </span>rake deploy
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2012-05-21T11:58:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2012</time>
       
-  <header>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2012/05/18/blog-jia-hao-yi-hou/">Blog 架好以後</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
+      <div class="sharing">
   
-
-
-<time datetime="2012-05-18T01:15:00+08:00" pubdate data-updated="true">May 18<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/18/blog-jia-hao-yi-hou/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>也不知道要寫什麼 XD
-架的這麼辛苦耶</p>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/13/xin-blog-kai-zhang/">新 Blog 開張</a></h1>
-    
-    
-      <p class="meta">
-        
+        <a class="basic-alignment left" href="/blog/2012/05/20/hello-world-to-b2g/" title="Previous Post: Hello World to B2G">&laquo; Hello World to B2G</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/05/26/qian-fa-tls-ping-zheng/" title="Next Post: 簽發 TLS 憑證">簽發 TLS 憑證 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-13T00:48:00+08:00" pubdate data-updated="true">May 13<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/13/xin-blog-kai-zhang/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>這次選用 Octopress 當作 Blog backend，真是經歷波折啊，全然不同的體驗。Octopress 不像以前用 blogspot，有漂亮的 UI 來設定網頁。他是用 markdown 撰寫，用 Ruby 去整理所有的樣板，在產生出靜態網頁，發布到網站。網站可以用 github page 來 host，搭配私有域名，可以真的弄出一個「很有個人味道」的 blog。</p>
-
-<p>只是為了要設定樣板，也真是折騰。尤其我不會 scss，幾乎沒辦法做事，上網去爬了一堆文，才找到方法在我的標題列上面放上背景。不過看到了精美的程式碼區塊，也覺得這應該還算是值得啦 XD。</p>
-
-<p>接下來還要弄 Google adsense 和 Google Analytics，就慢慢來。希望這個 Blog 可以使用順利。</p>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  
-  
+  </section>
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
 <aside class="sidebar">
   
     <section>
@@ -691,6 +368,7 @@ make</p>
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -705,7 +383,10 @@ make</p>
       var disqus_shortname = 'patricklog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.patrickz.net/blog/2012/05/21/c-he-c-plus-plus-de-callback/';
+        var disqus_url = 'http://blog.patrickz.net/blog/2012/05/21/c-he-c-plus-plus-de-callback/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
