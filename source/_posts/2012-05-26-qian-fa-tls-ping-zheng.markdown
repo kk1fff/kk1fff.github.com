@@ -1,10 +1,10 @@
 ---
 layout: post
 title: "簽發 TLS 憑證"
-date: 2012-05-13 14:49
+date: 2012-05-26 4:39
 comments: true
 categories: 
-published: false
+published: true
 ---
 使用 SSL 真的是個痛苦的過程，最麻煩的部份莫過於憑證。SSL 除了保障資料不被竊聽以外，還會保障
 Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方法去確定這個 Server 真的就是字面上
@@ -29,26 +29,49 @@ Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 
 或者，你也可以自己造一張自簽的憑證，然後用這張憑證去認證你的 server 憑證，再請使用者把這張
 自簽憑證手動加入瀏覽器根憑證，當然這狀況就是你的使用者肯、而且他要知道怎麼弄。
 
-測試 SSL 連線當然用後者就可以了。所以，我們要怎麼建立 SSL 憑證呢？建立憑證的步驟，不外乎
-
-1. 建立私鑰
-1. 建立 CSR(Certificate signing request)，這個步驟將會需要輸入憑證的相關資訊。
-1. 簽發憑證，這個步驟是透過簽發單位，對 CSR 作簽章，經過這個步驟後，就可以取得正式的
-憑證。
-
-這些步驟都可以使用 OpenSSL 來完成。
+測試 SSL 連線當然用後者就可以了。這些步驟都可以使用 OpenSSL 來完成。
 
 簽發 Self-signed 憑證的過程
 
+### 建立 CA 憑證
 {% codeblock lang:bash %}
-$ openssl genrsa -des3 -out ca.key 2048  # 建立 CA 私鑰
-$ openssl req -new -x509 -key ca.key -out ca.csr  # 建立 CSR
-$ openssl x509 -days 365 -in ca.csr -signkey ca.key -out ca2.crt  # 對 CSR 作簽章，有效期 365 天。由於私鑰和建立 CSR 的私鑰是同一個，所以就成了 self-signed certificate
+openssl genrsa -des3 -out ca.key 4096  # 建立 CA 私鑰
+openssl req -new -x509 -days 365 -key ca.key -out ca.crt  # 簽發 CA 憑證
 
 # 驗證一下，是不是正確
-$ openssl x509 -in ca.crt -text -noout
+openssl x509 -in ca.crt -text -noout
 {% endcodeblock %}
 
-上面這段指令的功用，就是產生一個 Key、一個 Version 3 的 CSR、然後簽證他。第一行指令不難
-理解，其中 des3 是金鑰演算法，2048 是長度。第二行指令則是用 req 指令，-new 代表產生
-新的 CSR，-key 表示產生 CSR 的金鑰，而
+### 建立 Server 憑證
+{% codeblock lang:bash %}
+openssl genrsa -des3 -out server.key 4096  # 建立 Server 私鑰
+openssl req -new -key server.key -out server.csr  # 建立 CSR，這個步驟會要求輸入基本資料，記得，CN 一定要符合 Domain（可以是 localhost 囉）
+openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt  # 使用 CA Key 簽發憑證
+{% endcodeblock %}
+
+### 匯入瀏覽器
+
+匯入瀏覽器的流程很容易，以 Firefox 來說，在 [設定] -> [Advanced] -> [Encryption]
+可以找到 [View Certificates] 按鈕。
+
+{% img center http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642500.png %}
+
+按下這個按鈕後，出現憑證列表，選擇 [Authorities]，就會出現所有認證機構的憑證。
+
+{% img center http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642358.png %}
+
+最後選擇 [Import] 選取剛剛建立好的 ca.crt，出現一個選項，至少要在相信他簽發的 Website
+
+{% img center http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2643502.png %}
+
+最後憑證就會出現在列表之中了
+
+{% img center http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642500.png %}
+
+匯入 Server 的方式因各種不同 Server 而異，主要會使用到 ca.crt、server.crt 和 server.key
+因為使用者已經相信簽發機構簽發的憑證，所以我們匯入 Server 之後，建立的 ssl 就可以被 user
+信任。
+
+### Reference
+* [Creating Certificate Authorities and self-signed SSL certificates](http://www.tc.umn.edu/~brams006/selfsign.html)
+* [How to create a self-signed SSL Certificate](http://www.akadia.com/services/ssh_test_certificate.html)
