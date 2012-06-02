@@ -4,7 +4,7 @@
   <title><![CDATA[Patricklog]]></title>
   <link href="http://blog.patrickz.net/atom.xml" rel="self"/>
   <link href="http://blog.patrickz.net/"/>
-  <updated>2012-05-28T00:02:40+08:00</updated>
+  <updated>2012-06-03T03:14:08+08:00</updated>
   <id>http://blog.patrickz.net/</id>
   <author>
     <name><![CDATA[kk1fff]]></name>
@@ -12,6 +12,134 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[在 Mac 上面 Build GCC 4.7]]></title>
+    <link href="http://blog.patrickz.net/blog/2012/06/03/zai-mac-shang-mian-build-gcc-4-dot-7/"/>
+    <updated>2012-06-03T02:02:00+08:00</updated>
+    <id>http://blog.patrickz.net/blog/2012/06/03/zai-mac-shang-mian-build-gcc-4-dot-7</id>
+    <content type="html"><![CDATA[<p>Homebrew 和 Macports 不相容，所以只能選一個。不過 Homebrew 追 gcc 的版本似乎是很慢。也因此，想要體驗 C++ 11 只有靠自己。還好，build GCC 的指令並不難，但是卻有一些小小的眉角。</p>
+
+<h3>下載檔案</h3>
+
+<p>依據 GCC 的網頁，安裝 GCC 除了需要下載 GCC Source Code 以外，還需要下載 GMP、MPFR
+和 MPC 三個套件。這些東西除了 MPC 以外，其他都可以在高速電腦中心的 FTP 下載到。</p>
+
+<p>下載 GCC 原始碼</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget ftp://ftp.twaren.net/Unix/GNU/gnu/gcc/gcc-4.7.0/gcc-4.7.0.tar.bz2
+</span><span class='line'>tar jxf gcc-4.7.0.tar.bz2
+</span><span class='line'>mv gcc-4.7.0 gcc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下載附加套件，然後把這些套件放進 GCC 原始碼資料夾下，並且把資料夾的版號去掉，這樣 GCC
+就可以搜尋到這些套件，不需要在 configure 下面設定</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>gcc
+</span><span class='line'>wget ftp://ftp.twaren.net/Unix/GNU/gnu/gmp/gmp-5.0.5.tar.bz2
+</span><span class='line'>tar jxf gmp-5.0.5.tar.bz2
+</span><span class='line'>mv gmp-5.0.5 gmp
+</span><span class='line'>wget ftp://ftp.twaren.net/Unix/GNU/gnu/mpfr/mpfr-3.1.0.tar.bz2
+</span><span class='line'>tar mpfr-3.1.0.tar.bz2
+</span><span class='line'>mv mpfr-3.1.0 mpfr
+</span><span class='line'>wget http://www.multiprecision.org/mpc/download/mpc-0.9.tar.gz
+</span><span class='line'>tar zxf mpc-0.9.tar.gz
+</span><span class='line'>mv mpc-0.9 mpc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Configure</h3>
+
+<p>首先，建立一個和 gcc 目錄同級的 build 目錄，然後進入 build 目錄內進行編譯。這樣可以讓編譯的結果和 gcc 原始碼分開，確保編譯出來的東西可以很輕易的被 clean。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>../gcc/configure <span class="se">\</span>
+</span><span class='line'>  --prefix<span class="o">=</span><span class="nv">$HOME</span>/local/ <span class="se">\</span>
+</span><span class='line'>  --program-suffix<span class="o">=</span>-4.7 <span class="se">\</span>
+</span><span class='line'>  --enable-language<span class="o">=</span>c,c++ <span class="se">\</span>
+</span><span class='line'>  --with-mpfr-lib<span class="o">=</span><span class="nv">$PWD</span>/mpfr/src/.libs <span class="se">\</span>
+</span><span class='line'>  --with-mpfr-include<span class="o">=</span><span class="nv">$PWD</span>/../gcc/mpfr/src
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中 &#8211;prefix 自然就是這個程式的目錄，而 &#8211;program-suffix 則是未來接在 gcc 工具後面的字串，在這裡加上 -4.7 也就是以後要使用 gcc-4.7 和 g++-4.7 以當作和 Mac 內建 tool 的區別。</p>
+
+<p>後面的 MPFR 參數則是 configure 的重點，這些沒寫會 build 不過，因為 configure mpc 時會找不到 mpfr 的 include。如果組態順利，就可以 make 了</p>
+
+<h3>Make</h3>
+
+<p>Make 過程很簡單，就是那個老招</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>make -j4
+</span><span class='line'>make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果安裝路徑的 bin 是在 path 以下，那就會有 gcc-4.7 和 g++-4.7 指令。</p>
+
+<h3>Try it</h3>
+
+<p>使用 GCC 4.7 當然就是要適用一下 C++11 的功能。這邊去網路上面找到了一個簡單的 lambda
+function 程式碼，來嘗試一下。</p>
+
+<figure class='code'><figcaption><span>lambda.cpp </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="p">[]</span> <span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world&quot;</span><span class="p">;</span> <span class="p">};</span>
+</span><span class='line'>  <span class="n">func</span><span class="p">();</span> <span class="c1">// now call the function</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>編譯時記得使用 c++11 的標準</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>g++-4.7 lambda.cpp -std=c++11</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Reference</h3>
+
+<ul>
+<li><a href="http://gcc.gnu.org/install/download.html">Downloading GCC</a></li>
+<li><a href="http://gcc.gnu.org/install/configure.html">Installing GCC: Configuration</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[簽發 TLS 憑證]]></title>
