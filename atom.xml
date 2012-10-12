@@ -4,7 +4,7 @@
   <title><![CDATA[Patricklog]]></title>
   <link href="http://blog.patrickz.net/atom.xml" rel="self"/>
   <link href="http://blog.patrickz.net/"/>
-  <updated>2012-06-03T03:26:42+08:00</updated>
+  <updated>2012-10-13T04:09:10+08:00</updated>
   <id>http://blog.patrickz.net/</id>
   <author>
     <name><![CDATA[kk1fff]]></name>
@@ -12,6 +12,135 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[C++ Regular Expression]]></title>
+    <link href="http://blog.patrickz.net/blog/2012/07/12/c-plus-plus-regular-expression/"/>
+    <updated>2012-07-12T17:54:00+08:00</updated>
+    <id>http://blog.patrickz.net/blog/2012/07/12/c-plus-plus-regular-expression</id>
+    <content type="html"><![CDATA[<p>用過 Python 以後，就會深深愛上 Python 那強大的 Regex parsing 能力。回過頭來，對於 C++ parsing 的功能，我還停留在 scanf 和 &gt;&gt; 這兩個基本到到不行的功能，聽說 C++11 有加入了 Regular Expression 的功能。就順便來研究一下，希望 C++ 能夠有足以和 Perl 或 Python 那個家族的 Parsing 能力。</p>
+
+<p>原本希望用 clang 3.1 來編譯，但是遇到</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;regex&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>就掛了，顯然 based library 還沒 Ready。改用 g++-4.7 就過了，可是，一切沒那麼容易，我不管建立任何 Regular expression 都會被丟出例外，連 wikipedia 上面的範例都噴射，最後只好放棄。考慮到 C++11 的 regex 是來自 boost，乾脆直接拿 boost 來用。</p>
+
+<p>使用 clang 或是 g++ 要注意指定 -std=c++11，而使用 boost，因為只是第三方 library，不需要指名使用 C++11 的標準，但是要注意連結 boost library。以我的 Mac 來說，使用 brew 安裝 Boost</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install boost
+</span><span class='line'><span class="c"># 會被安裝在 /usr/local/Cellar/boost/1.49.0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>要注意使用 -lboost_regex-mt 參數來連結。</p>
+
+<p>那就直接來看檔案吧</p>
+
+<figure class='code'><figcaption><span>regex.cpp </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#ifdef USE_BOOST_REGEX</span>
+</span><span class='line'><span class="cp">#include &lt;boost/regex.hpp&gt;</span>
+</span><span class='line'><span class="cp">#else</span>
+</span><span class='line'><span class="cp">#include &lt;regex&gt;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#ifdef USE_BOOST_REGEX</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="p">;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">try</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">regex</span> <span class="n">reg</span><span class="p">(</span><span class="s">&quot;[0-9]+&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&lt;tag&gt;1&lt;/tag&gt;&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">smatch</span> <span class="n">mat</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Matched: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">regex_search</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">reg</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">ssub_match</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">mat</span><span class="p">.</span><span class="n">prefix</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str_prefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">prefix</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Prefix: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">str_prefix</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Length: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">prefix</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">regex_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Makefile </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='makefile'><span class='line'><span class="nf">regex</span><span class="o">:</span> <span class="m">regex.cpp</span>
+</span><span class='line'>  @echo <span class="s2">&quot;Will now build&quot;</span> <span class="nv">$^</span>
+</span><span class='line'>  <span class="k">$(</span>CXX<span class="k">)</span> <span class="nv">$^</span> -g3 -lboost_regex-mt -DUSE_BOOST_REGEX -o regex
+</span><span class='line'>
+</span><span class='line'><span class="nf">.PHONY</span><span class="o">:</span> <span class="m">regex</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Regex 在 C++11 和 boost 有些許差異：在 C++11 中，使用 &lt;regex&gt; 標頭，函數命名空間在 std；在 boost 中，使用 &lt;boost/regex.hpp&gt; 標頭檔，命名空間是
+boost。其他部分幾乎是相同的。</p>
+
+<p>regex 類別是用來放 regex pattern 的類別，使 basic_regex 樣板定義的類別，宣告是這樣</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">typedef</span> <span class="n">basic_regex</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span>      <span class="n">regex</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">basic_regex</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span>   <span class="n">wregex</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所以寬字元使用 wregex。但我們一般使用 UTF-8 使用 regex 就可以。</p>
+
+<p>regex matching 提供兩個 function：regex_match 和 regex_search。這兩個函數的功用分別是：regex_match 要 match 整個輸入字串，而 regex_search 只需要 match 部分字串。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[在 Mac 上面 Build GCC 4.7]]></title>
