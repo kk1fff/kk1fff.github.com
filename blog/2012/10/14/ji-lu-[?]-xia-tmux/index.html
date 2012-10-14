@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>紀錄一下 tmux - Patricklog</title>
+  <meta name="author" content="kk1fff">
+
+  
+  <meta name="description" content="最近真是用 Tmux 用上癮了，好棒的東西！以前很少用 screen，也不是說 screen 不好，但對於
+screen 分割視窗的方法不是很熟悉。另外，screen 使用 ctrl+a 來下指令，和 emacs 的指令衝突，我不是很喜歡改預設設定，除非我真的無法習慣又非用不可。就因此，我選了 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.patrickz.net/blog/2012/10/14/ji-lu-%5B%3F%5D-xia-tmux">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Patricklog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1554201-3']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Patricklog</a></h1>
+  
+    <h2>Hi, I am Patrick.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.patrickz.net" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">紀錄一下 Tmux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T00:02:00+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>最近真是用 Tmux 用上癮了，好棒的東西！以前很少用 screen，也不是說 screen 不好，但對於
+screen 分割視窗的方法不是很熟悉。另外，screen 使用 ctrl+a 來下指令，和 emacs 的指令衝突，我不是很喜歡改預設設定，除非我真的無法習慣又非用不可。就因此，我選了 tmux。</p>
+
+<p>在 Mac 上安裝 tmux 和 ubuntu 上面一樣簡單。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>brew install tmux  <span class="c"># Mac</span>
+</span><span class='line'>sudo apt-get install tmux  <span class="c"># Ubuntu</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>啟動 tmux：輸入 tmux</h2>
+
+<p>在終端機中輸入 tmux，開啟 tmux</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14120925.png"></p>
+
+<h2>分割視窗：水平 ctrl-b %，垂直 ctrl-b &#8221;</h2>
+
+<p>下面有顯示基本資訊和視窗列表的 status bar，有一點類似 byobu。tmux 的控制 prefix 是
+ctrl+b，使用 ctrl+b % 用來把視窗分割成水平兩半。</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14121427.png"></p>
+
+<p>也可以分割為垂直的，只要使用 ctrl-b &#8221;</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14121924.png"></p>
+
+<p>分割出來的每一個視窗，稱為 pane。每個 pane 都可以再被分成更小的 pane。好比說剛剛垂直分割的視窗，也可以再分割為兩個水平的，只要再輸入一次 ctrl-b %</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14122140.png"></p>
+
+<p>如此一來，切割 pane 的工作就完成了，那如何在 panel 中切換呢？</p>
+
+<h2>切換 panel：ctrl-b &lt;方向鍵&gt; 或 ctrl-b o</h2>
+
+<p>切割完 pane，要在 pane 之間切換，只要用 ctrl-b 和方向鍵就可完成。當然，也可以用 ctrl-b o，有點類似 emacs 的「往下一個 buffer c-x o」，但是在 pane 多的時候，用方向鍵直覺很多。</p>
+
+<h2>開新視窗：ctrl-b c</h2>
+
+<p>類似 screen 的新視窗，用 c 當作指令。輸入這個指令以後，我們會得到一個全新的 window，下面
+status bar 也會出現一個新的項目。</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14122933.png"></p>
+
+<h2>切換視窗：ctrl-b &lt;數字&gt; 或 下一個：ctrl-b n、前一個：ctrl-b p</h2>
+
+<p>其中 status bar 上面寫的視窗編號，我們可以用 ctrl-b 數字，快速切換。比方說，按下 ctrl-b
+0，就會回到最剛開始開的視窗。</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14123225.png"></p>
+
+<p>而 ctrl-b n 和 ctrl-b p 分別代表 next 和 pervious，類似 emacs 的表達法（這就是為什麼我那麼愛 tmux，一整個很 emacs style）</p>
+
+<h2>輸入指令：ctrl-b :</h2>
+
+<p>tmux 眾多的指令，有些要使用參數，可以使用 ctrl-b : 快速鍵來輸入，按下這個快速鍵，游標會移到 status bar，就可以輸入指令了。</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14123605.png"></p>
+
+<h2>為視窗改名：renamew &lt;新名稱&gt;</h2>
+
+<p>有時候我習慣用一個 window 代表一個針對 bug 工作。但是只要 window 數量一多，很容易搞混。而修改視窗的名稱，則會顯示在 status bar，算是相當實用的功能。使用 ctrl-b : renamew &lt;new name&gt;
+可以完成。</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14124139.png"></p>
+
+<h2>顯示 pane 的編號：ctrl-b q</h2>
+
+<p>視窗有編號，pane 也有編號。知道 pane 的編號可以讓我們更容易操作 pane。按下 ctrl-b q，則
+tmux 會用 ASCII art 顯示 pane 的編號。</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14125035.png"></p>
+
+<h2>交換 pane：swapp -s &lt;pane1&gt; -t &lt;pane2&gt;</h2>
+
+<p>知道編號以後，就可以用 swapp 指令交換 pane 的位置，比方說</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>swapp -s 0 -t 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>就可以使得 pane 0 和 pane 1 的位置互相調換</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14125035-1.png"></p>
+
+<h2>回捲：ctrl-b [</h2>
+
+<p>如果輸出資料太長，一般圖形終端機可以用捲軸往回卷。tmux 也可以。按下 ctrl-b [ 以後，上下左右鍵可以用來控制捲動方向。此時，使用 ctrl-shift-2 可以開始選取。按下上下左右按鍵可以修改選取範圍。選取完畢後，可以按下 alt-w 複製。複製的通時會回到一般模式。再按下
+ctrl-] 就可以把剛剛複製的東西貼到終端機上面！</p>
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14102929.png"></p>
+
+<h2>兩個終端機共用一個 tmux session：attach</h2>
+
+<p>介紹最後一個功能，是我愛 tmux 超過 Terminator 的主要原因：假如我下班了，透過 vpn
+連回公司。我卻沒有辦法單單用 ssh 就開始使用我在 Terminator 的 session。而是要透過
+vnc。個人不喜歡 vnc，尤其是透過 vnc 只為了簡單的指令介面。這時，tmux 可以被共用的功能，就可以派上用場。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># SSH to your office pc...
+</span><span class='line'>
+</span><span class='line'>$ tmux attach</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14104138.png"></p>
+
+<h2>Else</h2>
+
+<p>Tmux 是非常強的東西，還有很多東西沒有機會介紹到。常用的在這邊也整理一下。</p>
+
+<pre><code>ctrl-b ctrl-&lt;方向鍵&gt; -- 調整 pane 大小
+:joinp -s &lt;Window編號&gt;.&lt;Pane編號&gt; -- 把別的 window 的 pane 拉過來
+ctrl-b &lt;空白鍵&gt; -- 改變 pane 的 layout
+ctrl-b d -- Deattch session，把 session 留在機器上，終端機模擬器就可以關閉了
+</code></pre>
+
+<p>還有什麼想到在補上。</p>
+
+<p>當然，如果用不慣純文字模式，用 Terminator 來作分割終端機也是非常好用。只是沒有辦法用 SSH 連回去而已。而 tmux 可以降低對滑鼠的依賴（滑鼠基本上可以說是用不上），又可以遠端工作。還可以類似 screen 般的保持 session 存活。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">kk1fff</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T00:02:00+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/12/c-plus-plus-regular-expression/" title="Previous Post: C++ Regular Expression">&laquo; C++ Regular Expression</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/14/ji-lu-%5B%3F%5D-xia-tmux/">紀錄一下 tmux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/12/c-plus-plus-regular-expression/">C++ Regular Expression</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/06/03/zai-mac-shang-mian-build-gcc-4-dot-7/">在 Mac 上面 Build GCC 4.7</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/26/qian-fa-tls-ping-zheng/">簽發 TLS 憑證</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/21/c-he-c-plus-plus-de-callback/">C 和 C++ 的 Callback</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+<section>
+<h1>Links</h1>
+<ul>
+<li><a href="http://about.me/kk1fff">About Me</a></li>
+<li><a href="http://0xf8c3b00k.github.com/0xf8c3b00k/">0xf8c3b00k</a></li>
+</ul>
+</section>
+<section>
+<h1>Support</h1>
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2590423290671103";
+/* blog in patrickz */
+google_ad_slot = "1263177702";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - kk1fff -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'patricklog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.patrickz.net/blog/2012/10/14/ji-lu-%5B%3F%5D-xia-tmux/';
+        var disqus_url = 'http://blog.patrickz.net/blog/2012/10/14/ji-lu-%5B%3F%5D-xia-tmux/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
