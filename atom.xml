@@ -4,7 +4,7 @@
   <title><![CDATA[Patricklog]]></title>
   <link href="http://blog.patrickz.net/atom.xml" rel="self"/>
   <link href="http://blog.patrickz.net/"/>
-  <updated>2012-10-14T11:10:22+08:00</updated>
+  <updated>2012-10-14T11:17:43+08:00</updated>
   <id>http://blog.patrickz.net/</id>
   <author>
     <name><![CDATA[kk1fff]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[紀錄一下 tmux]]></title>
-    <link href="http://blog.patrickz.net/blog/2012/10/14/ji-lu-%5B%3F%5D-xia-tmux/"/>
+    <link href="http://blog.patrickz.net/blog/2012/10/14/ji-lu-yi-xia-tmux/"/>
     <updated>2012-10-14T00:02:00+08:00</updated>
-    <id>http://blog.patrickz.net/blog/2012/10/14/ji-lu-[?]-xia-tmux</id>
+    <id>http://blog.patrickz.net/blog/2012/10/14/ji-lu-yi-xia-tmux</id>
     <content type="html"><![CDATA[<p>最近真是用 Tmux 用上癮了，好棒的東西！以前很少用 screen，也不是說 screen 不好，但對於
 screen 分割視窗的方法不是很熟悉。另外，screen 使用 ctrl+a 來下指令，和 emacs 的指令衝突，我不是很喜歡改預設設定，除非我真的無法習慣又非用不可。就因此，我選了 tmux。</p>
 
