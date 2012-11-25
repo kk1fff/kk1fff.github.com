@@ -17,6 +17,8 @@ brew install tmux  # Mac
 sudo apt-get install tmux  # Ubuntu
 {% endcodeblock %}
 
+<!-- more -->
+
 ## 啟動 tmux：輸入 tmux
 
 在終端機中輸入 tmux，開啟 tmux

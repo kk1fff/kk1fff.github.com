@@ -18,6 +18,8 @@ categories:
 我不管建立任何 Regular expression 都會被丟出例外，連 wikipedia 上面的範例都噴射，
 最後只好放棄。考慮到 C++11 的 regex 是來自 boost，乾脆直接拿 boost 來用。
 
+<!-- more -->
+
 使用 clang 或是 g++ 要注意指定 -std=c++11，而使用 boost，因為只是第三方 library，
 不需要指名使用 C++11 的標準，但是要注意連結 boost library。以我的 Mac 來說，
 使用 brew 安裝 Boost

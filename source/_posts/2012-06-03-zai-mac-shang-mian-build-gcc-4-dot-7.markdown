@@ -38,6 +38,8 @@ tar zxf mpc-0.9.tar.gz
 mv mpc-0.9 mpc
 {% endcodeblock %}
 
+<!-- more -->
+
 ### Configure
 
 首先，建立一個和 gcc 目錄同級的 build 目錄，然後進入 build 目錄內進行編譯。這樣可以讓

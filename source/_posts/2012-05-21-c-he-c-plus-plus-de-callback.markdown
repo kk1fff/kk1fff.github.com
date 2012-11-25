@@ -36,6 +36,8 @@ int main() {
 int (*op) (int, int)
 {% endcodeblock %}
 
+<!-- more -->
+
 傳入時使用取址運算子去取得函數指標
 
 {% codeblock lang:c %}

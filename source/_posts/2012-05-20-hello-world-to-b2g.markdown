@@ -24,6 +24,8 @@ categories:
 }
 {% endcodeblock %}
 
+<!-- more -->
+
 其中要注意就是 XULRunner 對於 json 的處理似乎比 node 還要更嚴謹，JSON 的 key 值一定
 要用雙引號，而且結尾不可以有逗號。
 
