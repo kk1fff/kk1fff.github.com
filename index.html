@@ -9,8 +9,7 @@
   <meta name="author" content="kk1fff">
 
   
-  <meta name="description" content="最近真是用 Tmux 用上癮了，好棒的東西！以前很少用 screen，也不是說 screen 不好，但對於
-screen 分割視窗的方法不是很熟悉。另外，screen 使用 ctrl+a 來下指令，和 emacs 的指令衝突，我不是很喜歡改預設設定，除非我真的無法習慣又非用不可。就因此，我選了 &hellip;">
+  <meta name="description" content="參與了幾個計畫，看一些 mailing list 裡面的作法，覺得版本控制真是一個非常有趣的事情。據說有些公司，仍然在沒有版本控制的世界裡。我很幸運，經歷過的公司都有，讓我學到很多。 版本控制的目的當然就是讓大家可以一起分享一份 source code，可以讓大家同時改自己想改的部份，可以讓 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +82,61 @@ screen 分割視窗的方法不是很熟悉。另外，screen 使用 ctrl+a 來�
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/11/25/ban-ben-kong-zhi-yu-xie-zuo/">版本控制系統和協作模式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-25T13:21:00+08:00" pubdate data-updated="true">Nov 25<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/11/25/ban-ben-kong-zhi-yu-xie-zuo/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/87A25E555FEB71672012-11-254E0B5348103724.png" title="'gitk 是 git 的 GUI front-end'" ></p>
+
+<p>參與了幾個計畫，看一些 mailing list 裡面的作法，覺得版本控制真是一個非常有趣的事情。據說有些公司，仍然在沒有版本控制的世界裡。我很幸運，經歷過的公司都有，讓我學到很多。</p>
+
+<p>版本控制的目的當然就是讓大家可以一起分享一份 source code，可以讓大家同時改自己想改的部份，可以讓 release 和 develop 的人從某一個時間點開始分開不同的路徑，release 可以專心讓
+release 版本變得穩定。也可以在 release 完成後把他們並回主幹。順道一題，媒體常常會在某
+W 開頭的作業系統出了以後，就說下一版的已經在開發，我想大家都知道這根本就是廢話，main trunk
+本來就是一直走下去的。</p>
+
+<p>廢話不多說。我遇到的第一套工具（自己唸書時用的 SVN 不算），叫做 perforce。Perforce 是一套商業版的版本控制系統。他是所謂集中式的版本控制。而且公司內部的管理邏輯算是簡單。也就是說，你改了一下，就 check-in 了。我在第一次上 code 的時候就把 main trunk 弄 build fail（汗），主要是因為我犯了個明顯的錯誤，但因為缺法 review 的過程，所以沒有人發現。</p>
+
+<p>此外，基於版本管理系統的運作都相當的複雜，通常，除了一個好的客戶端工具（包括 GUI 和指令介面），還需要一些好的 Guide。Open source 的版本控制系統在網路上已經有很多，而 perforce 不是。因此少了社群高手對 perforce 的講解和推廣，獲取資訊的來源少了很多。甚至有人只把 perforce
+當成是 ftp 抓 code 來用，基於又慢又不熟悉的環境，我一點也不驚訝。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/11/25/ban-ben-kong-zhi-yu-xie-zuo/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/10/14/ji-lu-yi-xia-tmux/">紀錄一下 Tmux</a></h1>
     
     
@@ -120,120 +174,14 @@ screen 分割視窗的方法不是很熟悉。另外，screen 使用 ctrl+a 來�
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>啟動 tmux：輸入 tmux</h2>
-
-<p>在終端機中輸入 tmux，開啟 tmux</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14120925.png"></p>
-
-<h2>分割視窗：水平 ctrl-b %，垂直 ctrl-b &#8221;</h2>
-
-<p>下面有顯示基本資訊和視窗列表的 status bar，有一點類似 byobu。tmux 的控制 prefix 是
-ctrl+b，使用 ctrl+b % 用來把視窗分割成水平兩半。</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14121427.png"></p>
-
-<p>也可以分割為垂直的，只要使用 ctrl-b &#8221;</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14121924.png"></p>
-
-<p>分割出來的每一個視窗，稱為 pane。每個 pane 都可以再被分成更小的 pane。好比說剛剛垂直分割的視窗，也可以再分割為兩個水平的，只要再輸入一次 ctrl-b %</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14122140.png"></p>
-
-<p>如此一來，切割 pane 的工作就完成了，那如何在 panel 中切換呢？</p>
-
-<h2>切換 panel：ctrl-b &lt;方向鍵&gt; 或 ctrl-b o</h2>
-
-<p>切割完 pane，要在 pane 之間切換，只要用 ctrl-b 和方向鍵就可完成。當然，也可以用 ctrl-b o，有點類似 emacs 的「往下一個 buffer c-x o」，但是在 pane 多的時候，用方向鍵直覺很多。</p>
-
-<h2>開新視窗：ctrl-b c</h2>
-
-<p>類似 screen 的新視窗，用 c 當作指令。輸入這個指令以後，我們會得到一個全新的 window，下面
-status bar 也會出現一個新的項目。</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14122933.png"></p>
-
-<h2>切換視窗：ctrl-b &lt;數字&gt; 或 下一個：ctrl-b n、前一個：ctrl-b p</h2>
-
-<p>其中 status bar 上面寫的視窗編號，我們可以用 ctrl-b 數字，快速切換。比方說，按下 ctrl-b
-0，就會回到最剛開始開的視窗。</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14123225.png"></p>
-
-<p>而 ctrl-b n 和 ctrl-b p 分別代表 next 和 pervious，類似 emacs 的表達法（這就是為什麼我那麼愛 tmux，一整個很 emacs style）</p>
-
-<h2>輸入指令：ctrl-b :</h2>
-
-<p>tmux 眾多的指令，有些要使用參數，可以使用 ctrl-b : 快速鍵來輸入，按下這個快速鍵，游標會移到 status bar，就可以輸入指令了。</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14123605.png"></p>
-
-<h2>為視窗改名：renamew &lt;新名稱&gt;</h2>
-
-<p>有時候我習慣用一個 window 代表一個針對 bug 工作。但是只要 window 數量一多，很容易搞混。而修改視窗的名稱，則會顯示在 status bar，算是相當實用的功能。使用 ctrl-b : renamew &lt;new name&gt;
-可以完成。</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14124139.png"></p>
-
-<h2>顯示 pane 的編號：ctrl-b q</h2>
-
-<p>視窗有編號，pane 也有編號。知道 pane 的編號可以讓我們更容易操作 pane。按下 ctrl-b q，則
-tmux 會用 ASCII art 顯示 pane 的編號。</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14125035.png"></p>
-
-<h2>交換 pane：swapp -s &lt;pane1&gt; -t &lt;pane2&gt;</h2>
-
-<p>知道編號以後，就可以用 swapp 指令交換 pane 的位置，比方說</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>swapp -s 0 -t 1
-</span></code></pre></td></tr></table></div></figure>
 
 
-<p>就可以使得 pane 0 和 pane 1 的位置互相調換</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14125035-1.png"></p>
-
-<h2>回捲：ctrl-b [</h2>
-
-<p>如果輸出資料太長，一般圖形終端機可以用捲軸往回卷。tmux 也可以。按下 ctrl-b [ 以後，上下左右鍵可以用來控制捲動方向。此時，使用 ctrl-shift-2 可以開始選取。按下上下左右按鍵可以修改選取範圍。選取完畢後，可以按下 alt-w 複製。複製的通時會回到一般模式。再按下
-ctrl-] 就可以把剛剛複製的東西貼到終端機上面！</p>
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14102929.png"></p>
-
-<h2>兩個終端機共用一個 tmux session：attach</h2>
-
-<p>介紹最後一個功能，是我愛 tmux 超過 Terminator 的主要原因：假如我下班了，透過 vpn
-連回公司。我卻沒有辦法單單用 ssh 就開始使用我在 Terminator 的 session。而是要透過
-vnc。個人不喜歡 vnc，尤其是透過 vnc 只為了簡單的指令介面。這時，tmux 可以被共用的功能，就可以派上用場。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># SSH to your office pc...
-</span><span class='line'>
-</span><span class='line'>$ tmux attach</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-10-14104138.png"></p>
-
-<h2>Else</h2>
-
-<p>Tmux 是非常強的東西，還有很多東西沒有機會介紹到。常用的在這邊也整理一下。</p>
-
-<pre><code>ctrl-b ctrl-&lt;方向鍵&gt; -- 調整 pane 大小
-:joinp -s &lt;Window編號&gt;.&lt;Pane編號&gt; -- 把別的 window 的 pane 拉過來
-ctrl-b &lt;空白鍵&gt; -- 改變 pane 的 layout
-ctrl-b d -- Deattch session，把 session 留在機器上，終端機模擬器就可以關閉了
-</code></pre>
-
-<p>還有什麼想到在補上。</p>
-
-<p>當然，如果用不慣純文字模式，用 Terminator 來作分割終端機也是非常好用。只是沒有辦法用 SSH 連回去而已。而 tmux 可以降低對滑鼠的依賴（滑鼠基本上可以說是用不上），又可以遠端工作。還可以類似 screen 般的保持 session 存活。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/10/14/ji-lu-yi-xia-tmux/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -280,118 +228,12 @@ ctrl-b d -- Deattch session，把 session 留在機器上，終端機模擬器�
 
 <p>就掛了，顯然 based library 還沒 Ready。改用 g++-4.7 就過了，可是，一切沒那麼容易，我不管建立任何 Regular expression 都會被丟出例外，連 wikipedia 上面的範例都噴射，最後只好放棄。考慮到 C++11 的 regex 是來自 boost，乾脆直接拿 boost 來用。</p>
 
-<p>使用 clang 或是 g++ 要注意指定 -std=c++11，而使用 boost，因為只是第三方 library，不需要指名使用 C++11 的標準，但是要注意連結 boost library。以我的 Mac 來說，使用 brew 安裝 Boost</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>brew install boost
-</span><span class='line'><span class="c"># 會被安裝在 /usr/local/Cellar/boost/1.49.0</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>要注意使用 -lboost_regex-mt 參數來連結。</p>
-
-<p>那就直接來看檔案吧</p>
-
-<figure class='code'><figcaption><span>regex.cpp </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#ifdef USE_BOOST_REGEX</span>
-</span><span class='line'><span class="cp">#include &lt;boost/regex.hpp&gt;</span>
-</span><span class='line'><span class="cp">#else</span>
-</span><span class='line'><span class="cp">#include &lt;regex&gt;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#ifdef USE_BOOST_REGEX</span>
-</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="p">;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">try</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">regex</span> <span class="n">reg</span><span class="p">(</span><span class="s">&quot;[0-9]+&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;&lt;tag&gt;1&lt;/tag&gt;&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">smatch</span> <span class="n">mat</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Matched: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">regex_search</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">reg</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">ssub_match</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">mat</span><span class="p">.</span><span class="n">prefix</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str_prefix</span><span class="p">(</span><span class="n">prefix</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">prefix</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Prefix: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">str_prefix</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Length: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">prefix</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">regex_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Makefile </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='makefile'><span class='line'><span class="nf">regex</span><span class="o">:</span> <span class="m">regex.cpp</span>
-</span><span class='line'>  @echo <span class="s2">&quot;Will now build&quot;</span> <span class="nv">$^</span>
-</span><span class='line'>  <span class="k">$(</span>CXX<span class="k">)</span> <span class="nv">$^</span> -g3 -lboost_regex-mt -DUSE_BOOST_REGEX -o regex
-</span><span class='line'>
-</span><span class='line'><span class="nf">.PHONY</span><span class="o">:</span> <span class="m">regex</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Regex 在 C++11 和 boost 有些許差異：在 C++11 中，使用 &lt;regex&gt; 標頭，函數命名空間在 std；在 boost 中，使用 &lt;boost/regex.hpp&gt; 標頭檔，命名空間是
-boost。其他部分幾乎是相同的。</p>
-
-<p>regex 類別是用來放 regex pattern 的類別，使 basic_regex 樣板定義的類別，宣告是這樣</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">typedef</span> <span class="n">basic_regex</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span>      <span class="n">regex</span><span class="p">;</span>
-</span><span class='line'><span class="k">typedef</span> <span class="n">basic_regex</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span>   <span class="n">wregex</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>所以寬字元使用 wregex。但我們一般使用 UTF-8 使用 regex 就可以。</p>
-
-<p>regex matching 提供兩個 function：regex_match 和 regex_search。這兩個函數的功用分別是：regex_match 要 match 整個輸入字串，而 regex_search 只需要 match 部分字串。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/07/12/c-plus-plus-regular-expression/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -471,91 +313,14 @@ boost。其他部分幾乎是相同的。</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Configure</h3>
 
-<p>首先，建立一個和 gcc 目錄同級的 build 目錄，然後進入 build 目錄內進行編譯。這樣可以讓編譯的結果和 gcc 原始碼分開，確保編譯出來的東西可以很輕易的被 clean。</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>../gcc/configure <span class="se">\</span>
-</span><span class='line'>  --prefix<span class="o">=</span><span class="nv">$HOME</span>/local/ <span class="se">\</span>
-</span><span class='line'>  --program-suffix<span class="o">=</span>-4.7 <span class="se">\</span>
-</span><span class='line'>  --enable-language<span class="o">=</span>c,c++ <span class="se">\</span>
-</span><span class='line'>  --with-mpfr-lib<span class="o">=</span><span class="nv">$PWD</span>/mpfr/src/.libs <span class="se">\</span>
-</span><span class='line'>  --with-mpfr-include<span class="o">=</span><span class="nv">$PWD</span>/../gcc/mpfr/src
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>其中 &#8211;prefix 自然就是這個程式的目錄，而 &#8211;program-suffix 則是未來接在 gcc 工具後面的字串，在這裡加上 -4.7 也就是以後要使用 gcc-4.7 和 g++-4.7 以當作和 Mac 內建 tool 的區別。</p>
-
-<p>後面的 MPFR 參數則是 configure 的重點，這些沒寫會 build 不過，因為 configure mpc 時會找不到 mpfr 的 include。如果組態順利，就可以 make 了</p>
-
-<h3>Make</h3>
-
-<p>Make 過程很簡單，就是那個老招</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>make -j4
-</span><span class='line'>make install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果安裝路徑的 bin 是在 path 以下，那就會有 gcc-4.7 和 g++-4.7 指令。</p>
-
-<h3>Try it</h3>
-
-<p>使用 GCC 4.7 當然就是要適用一下 C++11 的功能。這邊去網路上面找到了一個簡單的 lambda
-function 程式碼，來嘗試一下。</p>
-
-<figure class='code'><figcaption><span>lambda.cpp </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">auto</span> <span class="n">func</span> <span class="o">=</span> <span class="p">[]</span> <span class="p">()</span> <span class="p">{</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world&quot;</span><span class="p">;</span> <span class="p">};</span>
-</span><span class='line'>  <span class="n">func</span><span class="p">();</span> <span class="c1">// now call the function</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>編譯時記得使用 c++11 的標準</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>g++-4.7 lambda.cpp -std=c++11</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Note</h3>
-
-<p>本來想把他做成 Homebrew 套件的，可是看到 gcc45 的 rb 檔，就嚇到了！如果有人會製作
-Homebrew 套件，也請指教一下！</p>
-
-<p><a href="https://github.com/staticfloat/homebrew-versions/blob/master/gcc45.rb">gcc45.rb</a></p>
-
-<h3>Reference</h3>
-
-<ul>
-<li><a href="http://gcc.gnu.org/install/download.html">Downloading GCC</a></li>
-<li><a href="http://gcc.gnu.org/install/configure.html">Installing GCC: Configuration</a></li>
-</ul>
 
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/06/03/zai-mac-shang-mian-build-gcc-4-dot-7/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -598,72 +363,12 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
 的連線。這個連線位於 TCP 和 HTTP 之間，可以把他當作是一個安全的可信賴連線。在 SSL
 Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 CA 憑證。這兩個憑證用來建立所謂的 trust chain。</p>
 
-<p>什麼是 trust chain 呢？trust chain 就是一種類似老鼠會的組織。剛剛不是說過，我們的瀏覽器裡面有內建一些根憑證嗎？因為我們已經相信了這些根憑證，所以我們也就相信了他們認證的憑證，而他們認證的憑證又認證了新的憑證，我們也相信，如此一來，只要我們從 server 下載到的憑證的認證單位的認證單位的認證單位&#8230;.最後是我們瀏覽器的根憑證，那我們就可以相信這個憑證是有效的。</p>
-
-<p>問題是，你要怎麼取得這種憑證？基本上，沒辦法，除非付錢。你可以付錢，請某個單位幫你認證你的憑證，這樣的話，因為幫你認證的單位的憑證有被內建在瀏覽器，所以瀏覽器就會認為你的憑證有效。或者，你也可以自己造一張自簽的憑證，然後用這張憑證去認證你的 server 憑證，再請使用者把這張自簽憑證手動加入瀏覽器根憑證，當然這狀況就是你的使用者肯、而且他要知道怎麼弄。</p>
-
-<p>測試 SSL 連線當然用後者就可以了。這些步驟都可以使用 OpenSSL 來完成。</p>
-
-<p>簽發 Self-signed 憑證的過程</p>
-
-<h3>建立 CA 憑證</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>openssl genrsa -des3 -out ca.key 4096  <span class="c"># 建立 CA 私鑰</span>
-</span><span class='line'>openssl req -new -x509 -days 365 -key ca.key -out ca.crt  <span class="c"># 簽發 CA 憑證</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># 驗證一下，是不是正確</span>
-</span><span class='line'>openssl x509 -in ca.crt -text -noout
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>建立 Server 憑證</h3>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>openssl genrsa -des3 -out server.key 4096  <span class="c"># 建立 Server 私鑰</span>
-</span><span class='line'>openssl req -new -key server.key -out server.csr  <span class="c"># 建立 CSR，這個步驟會要求輸入基本資料，記得，CN 一定要符合 Domain（可以是 localhost 囉）</span>
-</span><span class='line'>openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt  <span class="c"># 使用 CA Key 簽發憑證</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>匯入瀏覽器</h3>
-
-<p>匯入瀏覽器的流程很容易，以 Firefox 來說，在 [設定] -> [Advanced] -> [Encryption]
-可以找到 [View Certificates] 按鈕。</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642500.png"></p>
-
-<p>按下這個按鈕後，出現憑證列表，選擇 [Authorities]，就會出現所有認證機構的憑證。</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642358.png"></p>
-
-<p>最後選擇 [Import] 選取剛剛建立好的 ca.crt，出現一個選項，至少要在相信他簽發的 Website</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2643502.png"></p>
-
-<p>最後憑證就會出現在列表之中了</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2642500.png"></p>
-
-<p>匯入 Server 的方式因各種不同 Server 而異，主要會使用到 ca.crt、server.crt 和 server.key
-因為使用者已經相信簽發機構簽發的憑證，所以我們匯入 Server 之後，建立的 ssl 就可以被 user
-信任。</p>
-
-<h3>Reference</h3>
-
-<ul>
-<li><a href="http://www.tc.umn.edu/~brams006/selfsign.html">Creating Certificate Authorities and self-signed SSL certificates</a></li>
-<li><a href="http://www.akadia.com/services/ssh_test_certificate.html">How to create a self-signed SSL Certificate</a></li>
-</ul>
-
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/26/qian-fa-tls-ping-zheng/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -749,111 +454,14 @@ Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>傳入時使用取址運算子去取得函數指標</p>
 
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="o">&amp;</span><span class="n">add</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>呼叫時 dereference 然後當函數使用</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">op</span><span class="p">)(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣的方法也可以用在 C++ 的靜態函數中（類別函數），但是不能用在物件函數。</p>
-
-<h3>C++ 的 Callback</h3>
-
-<p>C++ 有 this 指標，物件函數是需要有物件資料的。所以不能用傳統 C 的方式傳遞函數指標。C++
-物件函數的指標使用是這樣。</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Ops</span> <span class="p">{</span>
-</span><span class='line'> <span class="k">public</span><span class="o">:</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">sub</span><span class="p">(</span><span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">compute</span><span class="p">(</span><span class="n">Ops</span><span class="o">*</span> <span class="n">obj</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="n">Ops</span><span class="o">::*</span><span class="n">op</span><span class="p">)(</span><span class="kt">int</span><span class="p">),</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="n">obj</span><span class="o">-&gt;*</span><span class="n">op</span><span class="p">)(</span><span class="n">b</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">Ops</span> <span class="n">obj</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">obj</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Add: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">compute</span><span class="p">(</span><span class="o">&amp;</span><span class="n">obj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Ops</span><span class="o">::</span><span class="n">add</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Sub: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">compute</span><span class="p">(</span><span class="o">&amp;</span><span class="n">obj</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Ops</span><span class="o">::</span><span class="n">sub</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>宣告的時候需要帶類別和雛型</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="kt">int</span> <span class="p">(</span><span class="n">Ops</span><span class="o">::*</span><span class="n">op</span><span class="p">)(</span><span class="kt">int</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>傳送時用 &amp; 運算子取址</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="o">&amp;</span><span class="n">Ops</span><span class="o">::</span><span class="n">add</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>呼叫時，需要使用實體來呼叫，實體可以是指標也可以是物件參考</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">obj</span><span class="o">-&gt;*</span><span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>  <span class="c1">// 物件是指標形式時</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="o">*</span><span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>    <span class="c1">// 物件是參考形式時</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Reference</h3>
-
-<ul>
-<li><a href="http://www.newty.de/fpt/fpt.html#chapter2">The Syntax of C and C++ Function Pointers</a></li>
-</ul>
 
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/21/c-he-c-plus-plus-de-callback/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -912,78 +520,14 @@ Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>其中要注意就是 XULRunner 對於 json 的處理似乎比 node 還要更嚴謹，JSON 的 key 值一定要用雙引號，而且結尾不可以有逗號。</p>
 
-<p>再來就是一個簡單的 index.html</p>
-
-<figure class='code'><figcaption><span>index.html </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
-</span><span class='line'><span class="nt">&lt;head&gt;&lt;/head&gt;</span>
-</span><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'>hello gaia.
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>之後到 gaia 的 root，先砍掉已經 build 好的 profile （如果先前有 build 過），再重新
-make</p>
-
-<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>rm -r profile
-</span><span class='line'><span class="nv">$ </span>make
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Build 完以後，重新執行 Gaia 的模擬器，就可以看到：app 出現了！！</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2015813.png"></p>
-
-<p>點一下我們剛剛弄好的 hello，就會跑出剛剛網頁的內容</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2020205.png"></p>
-
-<h3>Map</h3>
-
-<p>從 Openstreet Map 上面可以取得我們所想要的地圖資料，在透過 iframe 就可以把他嵌進網頁裡面只要把剛剛的 hello gaia 稍微小改一下</p>
-
-<figure class='code'><figcaption><span>index.html </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
-</span><span class='line'><span class="nt">&lt;head&gt;&lt;/head&gt;</span>
-</span><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'><span class="nt">&lt;iframe</span> <span class="na">width=</span><span class="s">&quot;425&quot;</span> <span class="na">height=</span><span class="s">&quot;350&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span> <span class="na">scrolling=</span><span class="s">&quot;no&quot;</span> <span class="na">marginheight=</span><span class="s">&quot;0&quot;</span> <span class="na">marginwidth=</span><span class="s">&quot;0&quot;</span> <span class="na">src=</span><span class="s">&quot;http://www.openstreetmap.org/export/embed.html?bbox=121.296,24.9586,121.3607,25.0079&amp;amp;layer=mapnik&quot;</span> <span class="na">style=</span><span class="s">&quot;border: 1px solid black&quot;</span><span class="nt">&gt;&lt;/iframe&gt;&lt;br</span> <span class="nt">/&gt;&lt;small&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://www.openstreetmap.org/?lat=24.98325&amp;amp;lon=121.32835&amp;amp;zoom=14&amp;amp;layers=M&quot;</span><span class="nt">&gt;</span>View Larger Map<span class="nt">&lt;/a&gt;&lt;/small&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>重新編譯後，馬上，地圖就出現了</p>
-
-<p><img class="center" src="http://i1162.photobucket.com/albums/q535/kk1fff/2012-05-2020648.png"></p>
-
-<h3>Reference</h3>
-
-<ul>
-<li><a href="https://wiki.mozilla.org/WebAPI">WebAPI</a></li>
-<li><a href="https://developer.mozilla.org/en/Apps/Getting_Started">Getting started with making apps</a></li>
-<li><a href="https://developer.mozilla.org/en/Apps/Manifest">App manifest</a></li>
-</ul>
 
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/05/20/hello-world-to-b2g/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -1143,7 +687,7 @@ make</p>
   <h1>Patrick Wang</h1>
   <img src="/images/patrick.png">
   <ul>
-  <li>軟體開發者，熟悉的語言是 C++ 和 Javascript，喜歡用鍵盤操作電腦，用的電腦一定要有
+  <li>寫軟體的，熟悉的語言是 C++ 和 Javascript，喜歡用鍵盤操作電腦，用的電腦一定要有
   UNIX Console，所以我有 Mac 和 Linux，但沒有 Windows。興趣跟一般軟體人一樣：做有趣的東西。偶爾喜歡拿單眼假裝很厲害的拍拍照。當
 Blog 需要貼照片的時候卻連一張大頭貼都找不到。</li>
   <li><a href="http://www.facebook.com/p1234">我的 Facebook</a></li>
@@ -1153,6 +697,10 @@ Blog 需要貼照片的時候卻連一張大頭貼都找不到。</li>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/25/ban-ben-kong-zhi-yu-xie-zuo/">版本控制系統和協作模式</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/14/ji-lu-yi-xia-tmux/">紀錄一下 tmux</a>
@@ -1168,10 +716,6 @@ Blog 需要貼照片的時候卻連一張大頭貼都找不到。</li>
     
       <li class="post">
         <a href="/blog/2012/05/26/qian-fa-tls-ping-zheng/">簽發 TLS 憑證</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/21/c-he-c-plus-plus-de-callback/">C 和 C++ 的 Callback</a>
       </li>
     
   </ul>

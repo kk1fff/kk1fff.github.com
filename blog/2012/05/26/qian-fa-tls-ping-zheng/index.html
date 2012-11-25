@@ -112,6 +112,9 @@ Server 沒有被調包。為了作這件事情，瀏覽器透過一系列的方�
 的連線。這個連線位於 TCP 和 HTTP 之間，可以把他當作是一個安全的可信賴連線。在 SSL
 Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 CA 憑證。這兩個憑證用來建立所謂的 trust chain。</p>
 
+<!-- more -->
+
+
 <p>什麼是 trust chain 呢？trust chain 就是一種類似老鼠會的組織。剛剛不是說過，我們的瀏覽器裡面有內建一些根憑證嗎？因為我們已經相信了這些根憑證，所以我們也就相信了他們認證的憑證，而他們認證的憑證又認證了新的憑證，我們也相信，如此一來，只要我們從 server 下載到的憑證的認證單位的認證單位的認證單位&#8230;.最後是我們瀏覽器的根憑證，那我們就可以相信這個憑證是有效的。</p>
 
 <p>問題是，你要怎麼取得這種憑證？基本上，沒辦法，除非付錢。你可以付錢，請某個單位幫你認證你的憑證，這樣的話，因為幫你認證的單位的憑證有被內建在瀏覽器，所以瀏覽器就會認為你的憑證有效。或者，你也可以自己造一張自簽的憑證，然後用這張憑證去認證你的 server 憑證，再請使用者把這張自簽憑證手動加入瀏覽器根憑證，當然這狀況就是你的使用者肯、而且他要知道怎麼弄。</p>
@@ -238,7 +241,7 @@ Handshark 的時候，瀏覽器會從 Server 下載 Server 憑證和 Server 的 
   <h1>Patrick Wang</h1>
   <img src="/images/patrick.png">
   <ul>
-  <li>軟體開發者，熟悉的語言是 C++ 和 Javascript，喜歡用鍵盤操作電腦，用的電腦一定要有
+  <li>寫軟體的，熟悉的語言是 C++ 和 Javascript，喜歡用鍵盤操作電腦，用的電腦一定要有
   UNIX Console，所以我有 Mac 和 Linux，但沒有 Windows。興趣跟一般軟體人一樣：做有趣的東西。偶爾喜歡拿單眼假裝很厲害的拍拍照。當
 Blog 需要貼照片的時候卻連一張大頭貼都找不到。</li>
   <li><a href="http://www.facebook.com/p1234">我的 Facebook</a></li>
@@ -248,6 +251,10 @@ Blog 需要貼照片的時候卻連一張大頭貼都找不到。</li>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/25/ban-ben-kong-zhi-yu-xie-zuo/">版本控制系統和協作模式</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/10/14/ji-lu-yi-xia-tmux/">紀錄一下 tmux</a>
@@ -263,10 +270,6 @@ Blog 需要貼照片的時候卻連一張大頭貼都找不到。</li>
     
       <li class="post">
         <a href="/blog/2012/05/26/qian-fa-tls-ping-zheng/">簽發 TLS 憑證</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/21/c-he-c-plus-plus-de-callback/">C 和 C++ 的 Callback</a>
       </li>
     
   </ul>
