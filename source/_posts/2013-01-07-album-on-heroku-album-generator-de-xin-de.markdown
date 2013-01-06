@@ -11,7 +11,8 @@ categories:
 我做了一個叫做 album-generator 的東西，可以把資料夾裡面的相片組織成網路相簿。還附上了一些基本的檔案
 可以在 heroku 上直接用，程式碼放在 github 上面，大家快來看喔！
 
-程式碼網址：<a href="https://github.com/kk1fff/album-generator">@github</a>
+* 程式碼網址：<a href="https://github.com/kk1fff/album-generator">@github</a>
+* 相簿網址：<a href="http://photo.patrickz.net/">Patrick's Album</a>
 
 ## 楔子
 
