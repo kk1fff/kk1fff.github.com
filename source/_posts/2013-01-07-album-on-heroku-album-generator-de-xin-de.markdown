@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Album on Heroku - album-generator 的心得"
+title: "在 Heroku 上面放相簿 - album-generator 的心得"
 date: 2013-01-07 01:54
 comments: true
 categories: 
